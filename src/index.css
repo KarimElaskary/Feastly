@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+*{
+    font-family: "Rubik", sans-serif;
+}
+
+@theme {
+    --color-primary: #92400e;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #ffffff; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #92400e; 
+}
