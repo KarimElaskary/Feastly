@@ -60,14 +60,14 @@ const Header = () => {
               </Link>
             </div>
 
-            <Link to="/user">
+            <Link to="/user" className="hidden">
               <FaUser className="text-3xl" />
             </Link>
           </div>
 
           {/* Mobile Icons */}
           <div className="flex items-center gap-4 md:hidden text-primary">
-            <Link to="/user">
+            <Link to="/user" className="hidden">
               <FaUser className="text-3xl" />
             </Link>
             <Link to="/cart" className="relative">
