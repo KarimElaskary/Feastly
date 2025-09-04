@@ -36,7 +36,7 @@ const Hero = () => {
               <img
                 src={slide.img}
                 alt={slide.title}
-                className="w-[1200px] h-[600px] rounded-2xl"
+                className="rounded-2xl"
               />
               <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[40px]">
                 <h1 className="text-8xl text-white font-bold text-shadow-lg text-shadow-black">
