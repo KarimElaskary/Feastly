@@ -4,8 +4,8 @@ import { createSlice } from "@reduxjs/toolkit";
 // ✅ initial state
 const initialState = {
   cartItems: [], // Array of items {id, title, price, amount}
-  amount: 0,     // Total quantity of items
-  total: 0       // Total price of all items
+  amount: 0, // Total quantity of items
+  total: 0, // Total price of all items
 };
 
 const cartSlice = createSlice({
@@ -29,9 +29,7 @@ const cartSlice = createSlice({
     increase: (state, action) => {
       const itemId = action.payload;
       const cartItem = state.cartItems.find((item) => item.id === itemId);
-      
-        cartItem.amount = state.cartItems.length;
-      
+      cartItem.amount += 1;
     },
 
     // ✅ decrease quantity of one item
@@ -61,7 +59,9 @@ const cartSlice = createSlice({
     // ✅ add new item or increase amount if already in cart
     addToCart: (state, action) => {
       const newItem = action.payload;
-      const existingItem = state.cartItems.find((item) => item.id === newItem.id);
+      const existingItem = state.cartItems.find(
+        (item) => item.id === newItem.id
+      );
 
       if (existingItem) {
         existingItem.amount += 1;
@@ -78,7 +78,7 @@ export const {
   increase,
   decrease,
   calculateTotals,
-  addToCart
+  addToCart,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

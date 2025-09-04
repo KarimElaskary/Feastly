@@ -12,10 +12,18 @@ const CartItem = ({ cartItem }) => {
     <div className="bg-primary flex rounded-xl px-5 mt-4 p-3 justify-between">
       {/* Left side: image + title + price */}
       <div className="flex gap-3 items-center">
-        <img src={cartItem.imagesUrl} alt={cartItem.name} className="w-16 h-16" />
+        <img
+          src={cartItem.imagesUrl}
+          alt={cartItem.name}
+          className="w-16 h-16"
+        />
         <div className="flex flex-col gap-3">
-          <h1 className="text-2xl font-bold">{cartItem.name} - <span>${cartItem.price}</span></h1>
-          <p className="font-semibold">${(cartItem.price * cartItem.amount).toFixed(2)}</p>
+          <h1 className="text-2xl font-bold">
+            {cartItem.name} - <span>${cartItem.price}</span>
+          </h1>
+          <p className="font-semibold">
+            ${(cartItem.price * cartItem.amount).toFixed(2)}
+          </p>
         </div>
       </div>
 
