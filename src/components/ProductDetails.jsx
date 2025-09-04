@@ -11,8 +11,8 @@ const ProductDetails = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`https://dummyjson.com/products/${id}`);
-        setProduct(response.data);
+        const response = await axios.get(`https://e-commerce9.runasp.net/api/Products/${id}`);
+        setProduct(response.data.data);
       } catch (error) {
         console.error('Failed to fetch product:', error);
       } finally {
@@ -36,17 +36,17 @@ const ProductDetails = () => {
       <h1 className="text-2xl font-bold mb-4">Product Details</h1>
       <div className="flex flex-col md:flex-row gap-6">
         <img
-          src={product.thumbnail}
-          alt={product.title}
+          src={product.imagesUrl}
+          alt={product.name}
           className="w-full md:w-1/3 object-cover rounded-md shadow-sm"
         />
         <div className="flex-1">
           <p><span className="font-semibold">ID:</span> {product.id}</p>
-          <p><span className="font-semibold">Title:</span> {product.title}</p>
+          <p><span className="font-semibold">Title:</span> {product.name}</p>
           <p><span className="font-semibold">Description:</span> {product.description}</p>
-          <p><span className="font-semibold">Category:</span> {product.category}</p>
+          <p><span className="font-semibold">Category:</span> {product.brand}</p>
           <p><span className="font-semibold">Price:</span> ${product.price}</p>
-          <p><span className="font-semibold">Rating:</span> ⭐ {product.rating}</p>
+          {/* <p><span className="font-semibold">Rating:</span> ⭐ {product.rating}</p> */}
         </div>
       </div>
     </div>

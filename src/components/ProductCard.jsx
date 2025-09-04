@@ -10,15 +10,11 @@ import { addToCart } from "../features/cartSlice"; // adjust path if needed
 const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
 
-  const handleAddToCart = () => {
-    dispatch(addToCart(product));
-  };
-
   return (
     <div className="flex flex-col w-[300px] p-5 bg-primary rounded-2xl text-white hover:bg-white hover:text-primary transition-colors duration-300 border-2 border-primary">
       <Link to={`/product/${product.id}`}>
-        <img src={product.thumbnail} alt={product.title} />
-        <h1>{product.title}</h1>
+        <img src={product.imagesUrl} alt={product.name} className='w-[300px] h-[200px]'/>
+        <h1>{product.name}</h1>
         <p>Price: ${product.price}</p>
       </Link>
       <button 

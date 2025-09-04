@@ -3,6 +3,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import { Link } from "react-router-dom";
 
 // Import Swiper styles
 import "swiper/css";
@@ -41,9 +42,9 @@ const Hero = () => {
                 <h1 className="text-8xl text-white font-bold text-shadow-lg text-shadow-black">
                   {slide.title}
                 </h1>
-                <button className="bg-primary text-white px-4 py-2 rounded cursor-pointer">
+                <Link to='/products' className="bg-primary text-white px-4 py-2 rounded cursor-pointer">
                   Order
-                </button>
+                </Link>
               </div>
             </div>
           </SwiperSlide>

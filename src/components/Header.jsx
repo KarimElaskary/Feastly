@@ -11,10 +11,12 @@ const Header = () => {
   const location = useLocation();
 
   // ✅ Get cart amount from Redux store
-  const cartAmount = useSelector((state) => state.cart.amount);
+  const {amount} = useSelector((state) => state.cart);
 
   useEffect(() => {
-    dispatch(searchProducts(searchTerm));
+    if(searchTerm){
+      dispatch(searchProducts(searchTerm));
+    }
   }, [searchTerm, dispatch]);
 
   const handleSearchInputChange = (e) => {
@@ -59,7 +61,7 @@ const Header = () => {
               <Link to="/cart">
                 <FaShoppingCart className="text-3xl" />
                 <span className="absolute -top-2 -right-2 bg-white border border-primary text-primary text-xs w-5 h-5 flex items-center justify-center rounded-full">
-                  {cartAmount}
+                  {amount}
                 </span>
               </Link>
             </div>
@@ -94,7 +96,7 @@ const Header = () => {
             <Link to="/cart" className="relative">
               <FaShoppingCart className="text-2xl" />
               <span className="absolute -top-2 -right-2 bg-white border border-primary text-primary text-xs w-5 h-5 flex items-center justify-center rounded-full">
-                {cartAmount}
+                {amount}
               </span>
             </Link>
           </div>

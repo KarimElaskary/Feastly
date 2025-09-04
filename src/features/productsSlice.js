@@ -7,8 +7,8 @@ import axios from "axios";
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
   async () => {
-    const response = await axios.get("https://dummyjson.com/products");
-    return response.data.products;
+    const response = await axios.get("https://e-commerce9.runasp.net/api/Products");
+    return response.data.data;
   }
 );
 
