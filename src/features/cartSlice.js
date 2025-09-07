@@ -67,6 +67,7 @@ const cartSlice = createSlice({
         existingItem.amount += 1;
       } else {
         state.cartItems.push({ ...newItem, amount: 1 });
+        state.amount += 1
       }
     },
   },

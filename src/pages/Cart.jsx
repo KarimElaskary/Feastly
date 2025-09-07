@@ -42,7 +42,7 @@ const Cart = () => {
       </h1>
 
       {/* Buttons */}
-      <div className='text-primary mt-5 flex flex-col md:flex-row gap-5 justify-center'>
+      <div className='text-primary mt-5 mb-5 flex flex-col md:flex-row gap-5 justify-center'>
         {/* Clear cart button */}
         <button
           onClick={() => dispatch(clearCart())}

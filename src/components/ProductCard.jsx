@@ -11,7 +11,7 @@ const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
 
   return (
-    <div className="flex flex-col w-[300px] p-5 bg-primary rounded-2xl text-white hover:bg-white hover:text-primary transition-colors duration-300 border-2 border-primary">
+    <div className="flex flex-col w-[300px] p-5 bg-white rounded-2xl text-primary hover:text-white hover:bg-primary transition-colors duration-300 border-2 border-primary">
       <Link to={`/product/${product.id}`}>
         <img src={product.imagesUrl} alt={product.name} className='w-[300px] h-[200px]'/>
         <h1>{product.name}</h1>

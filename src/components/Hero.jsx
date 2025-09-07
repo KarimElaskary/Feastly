@@ -36,10 +36,10 @@ const Hero = () => {
               <img
                 src={slide.img}
                 alt={slide.title}
-                className="rounded-2xl"
+                className="rounded-2xl h-[40vh] md:h-[500px] lg:h-[60vh] lg:w-[60vw]"
               />
               <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[40px]">
-                <h1 className="text-8xl text-white font-bold text-shadow-lg text-shadow-black">
+                <h1 className="text-6xl lg:text-8xl text-white font-bold text-shadow-lg text-shadow-black">
                   {slide.title}
                 </h1>
                 <Link to='/products' className="bg-primary text-white px-4 py-2 rounded cursor-pointer">
