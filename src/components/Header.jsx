@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { FaSearch, FaShoppingCart, FaUser } from 'react-icons/fa'
 import feastly from '../assets/feastly.png'
 import { useDispatch, useSelector } from 'react-redux'
-import { searchProducts } from '../features/productsSlice'
+import { searchProducts, fetchProducts } from '../features/productsSlice'
 
 const Header = () => {
   const [searchTerm, setSearchTerm] = useState('')
@@ -14,8 +14,11 @@ const Header = () => {
   const { amount } = useSelector((state) => state.cart)
 
   useEffect(() => {
-    if (searchTerm) {
+    if (searchTerm.trim()) {
       dispatch(searchProducts(searchTerm))
+    } else {
+      // When search is cleared, fetch all products
+      dispatch(fetchProducts())
     }
   }, [searchTerm, dispatch])
 

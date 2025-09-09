@@ -11,7 +11,6 @@ const Products = () => {
   const [filteredProducts, setFilteredProducts] = useState([])
 
   const categories = ['All', 'Pizza', 'Seafood', 'Burger']
-  console.log('selectedCategory', selectedCategory)
   // Fetch products on mount or when status is idle
   useEffect(() => {
     if (status === 'idle') {
@@ -20,14 +19,16 @@ const Products = () => {
   }, [dispatch, status])
 
   useEffect(() => {
-    if (selectedCategory === 'All') {
-      setFilteredProducts(products)
-    } else {
-      const filtered = products.filter(
-        (product) =>
-          product.brand.toLowerCase() === selectedCategory.toLowerCase()
-      )
-      setFilteredProducts(filtered)
+    if (products && Array.isArray(products)) {
+      if (selectedCategory === 'All') {
+        setFilteredProducts(products)
+      } else {
+        const filtered = products.filter(
+          (product) =>
+            product.brand.toLowerCase() === selectedCategory.toLowerCase()
+        )
+        setFilteredProducts(filtered)
+      }
     }
   }, [products, selectedCategory])
 
@@ -63,7 +64,9 @@ const Products = () => {
 
       {/* Products Grid */}
       {status === 'succeeded' &&
-        (filteredProducts.length > 0 ? (
+        (filteredProducts &&
+        Array.isArray(filteredProducts) &&
+        filteredProducts.length > 0 ? (
           <div className='flex flex-wrap gap-6 justify-center'>
             {filteredProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
