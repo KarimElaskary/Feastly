@@ -102,6 +102,9 @@ const Header = () => {
                 {amount}
               </span>
             </Link>
+            <Link to='/user' className='hidden'>
+              <FaUser className='text-2xl' />
+            </Link>
           </div>
         </div>
       </div>
