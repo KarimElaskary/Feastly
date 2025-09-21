@@ -71,7 +71,6 @@ const ProductDetails = () => {
           <p>
             <span className='font-semibold'>Price:</span> ${product.price}
           </p>
-          {/* <p><span className="font-semibold">Rating:</span> ⭐ {product.rating}</p> */}
         </div>
         <button onClick={() => {
           dispatch(addToCart(product))

@@ -4,6 +4,13 @@ import { FaSearch, FaShoppingCart, FaUser } from 'react-icons/fa'
 import feastly from '../assets/feastly.png'
 import { useDispatch, useSelector } from 'react-redux'
 import { searchProducts, fetchProducts } from '../features/productsSlice'
+// Clerk authentication components
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+} from '@clerk/clerk-react'
 
 const Header = () => {
   const [searchTerm, setSearchTerm] = useState('')
@@ -69,9 +76,24 @@ const Header = () => {
               </Link>
             </div>
 
-            <Link to='/user' className='hidden'>
-              <FaUser className='text-3xl' />
-            </Link>
+            {/* Clerk Authentication - Desktop */}
+            <SignedOut>
+              <SignInButton mode='modal'>
+                <button className='bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors'>
+                  Sign In
+                </button>
+              </SignInButton>
+            </SignedOut>
+            <SignedIn>
+              <UserButton
+                afterSignOutUrl='/'
+                appearance={{
+                  elements: {
+                    avatarBox: 'w-10 h-10',
+                  },
+                }}
+              />
+            </SignedIn>
           </div>
 
           {/* ✅ Mobile Layout (no dropdown anymore) */}
@@ -102,9 +124,24 @@ const Header = () => {
                 {amount}
               </span>
             </Link>
-            <Link to='/user' className='hidden'>
-              <FaUser className='text-2xl' />
-            </Link>
+            {/* Clerk Authentication - Mobile */}
+            <SignedOut>
+              <SignInButton mode='modal'>
+                <button className='bg-primary text-white px-3 py-1 rounded text-sm hover:bg-primary/90 transition-colors'>
+                  Sign In
+                </button>
+              </SignInButton>
+            </SignedOut>
+            <SignedIn>
+              <UserButton
+                afterSignOutUrl='/'
+                appearance={{
+                  elements: {
+                    avatarBox: 'w-8 h-8',
+                  },
+                }}
+              />
+            </SignedIn>
           </div>
         </div>
       </div>
