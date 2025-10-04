@@ -1,38 +1,40 @@
-import React, { useState, useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom'
-import { FaSearch, FaShoppingCart, FaUser } from 'react-icons/fa'
-import feastly from '../assets/feastly.png'
-import { useDispatch, useSelector } from 'react-redux'
-import { searchProducts, fetchProducts } from '../features/productsSlice'
-// Clerk authentication components
-import {
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  UserButton,
-} from '@clerk/clerk-react'
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { FaSearch, FaShoppingCart, FaUser } from 'react-icons/fa';
+import feastly from '../assets/feastly.png';
+import { useDispatch, useSelector } from 'react-redux';
+import { searchProducts, fetchProducts } from '../features/productsSlice';
+import { logout } from '../features/authSlice';
 
 const Header = () => {
-  const [searchTerm, setSearchTerm] = useState('')
-  const dispatch = useDispatch()
-  const location = useLocation()
+  const [searchTerm, setSearchTerm] = useState('');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  // ✅ Get cart amount from Redux store
-  const { amount } = useSelector((state) => state.cart)
+  // ✅ Get cart and auth states
+  const { amount } = useSelector((state) => state.cart);
+  const { token, user } = useSelector((state) => state.auth);
 
+  // ✅ Handle product search
   useEffect(() => {
     if (searchTerm.trim()) {
-      dispatch(searchProducts(searchTerm))
+      dispatch(searchProducts(searchTerm));
     } else {
-      // When search is cleared, fetch all products
-      dispatch(fetchProducts())
+      dispatch(fetchProducts());
     }
-  }, [searchTerm, dispatch])
+  }, [searchTerm, dispatch]);
 
   const handleSearchInputChange = (e) => {
-    e.preventDefault()
-    setSearchTerm(e.target.value)
-  }
+    e.preventDefault();
+    setSearchTerm(e.target.value);
+  };
+
+  // ✅ Logout function
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate('/signin');
+  };
 
   return (
     <div className='bg-white shadow-md sticky top-0 z-50'>
@@ -49,7 +51,7 @@ const Header = () => {
               to='/products'
               className='text-xl hover:underline hover:underline-offset-4 rounded-lg p-2 transition-all'
             >
-              products
+              Products
             </Link>
 
             {/* Search input only on /products */}
@@ -76,27 +78,29 @@ const Header = () => {
               </Link>
             </div>
 
-            {/* Clerk Authentication - Desktop */}
-            <SignedOut>
-              <SignInButton mode='modal'>
-                <button className='bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors'>
-                  Sign In
+            {/* ✅ Auth Section */}
+            {token ? (
+              <div className='flex items-center gap-3'>
+                <FaUser className='text-2xl' />
+                <span className='text-lg'>{user?.name || 'User'}</span>
+                <button
+                  onClick={handleLogout}
+                  className='border px-3 py-1 rounded-md hover:bg-primary hover:text-white transition-all'
+                >
+                  Logout
                 </button>
-              </SignInButton>
-            </SignedOut>
-            <SignedIn>
-              <UserButton
-                afterSignOutUrl='/'
-                appearance={{
-                  elements: {
-                    avatarBox: 'w-10 h-10',
-                  },
-                }}
-              />
-            </SignedIn>
+              </div>
+            ) : (
+              <Link
+                to='/signin'
+                className='border px-3 py-1 rounded-md hover:bg-primary hover:text-white transition-all'
+              >
+                Sign in
+              </Link>
+            )}
           </div>
 
-          {/* ✅ Mobile Layout (no dropdown anymore) */}
+          {/* ✅ Mobile Layout */}
           <div className='flex items-center gap-3 md:hidden text-primary flex-1 justify-end'>
             {location.pathname === '/products' ? (
               <div className='flex-1 relative border rounded p-1'>
@@ -114,7 +118,7 @@ const Header = () => {
                 to='/products'
                 className='text-xl hover:underline hover:underline-offset-4 rounded-lg p-2 transition-all'
               >
-                products
+                Products
               </Link>
             )}
 
@@ -124,29 +128,22 @@ const Header = () => {
                 {amount}
               </span>
             </Link>
-            {/* Clerk Authentication - Mobile */}
-            <SignedOut>
-              <SignInButton mode='modal'>
-                <button className='bg-primary text-white px-3 py-1 rounded text-sm hover:bg-primary/90 transition-colors'>
-                  Sign In
-                </button>
-              </SignInButton>
-            </SignedOut>
-            <SignedIn>
-              <UserButton
-                afterSignOutUrl='/'
-                appearance={{
-                  elements: {
-                    avatarBox: 'w-8 h-8',
-                  },
-                }}
-              />
-            </SignedIn>
+
+            {/* ✅ Auth Mobile */}
+            {token ? (
+              <button onClick={handleLogout} className='text-sm underline'>
+                Logout
+              </button>
+            ) : (
+              <Link to='/signin' className='text-sm underline'>
+                Sign in
+              </Link>
+            )}
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

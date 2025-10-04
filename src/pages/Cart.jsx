@@ -2,34 +2,20 @@
 import React, { useEffect } from 'react'
 import CartItem from '../components/CartItem'
 import { useSelector, useDispatch } from 'react-redux'
-import {
-  clearCart,
-  calculateTotals,
-  clearUserCart,
-  saveUserCart,
-} from '../features/cartSlice'
+import { clearCart, calculateTotals } from '../features/cartSlice' // make sure these actions are correctly imported
 
 const Cart = () => {
-  // ✅ Get cart state from Redux store
   const { cartItems, amount, total } = useSelector((state) => state.cart)
-  const { currentUser } = useSelector((state) => state.user)
   const dispatch = useDispatch()
 
-  // ✅ Automatically recalculate totals whenever cartItems changes
   useEffect(() => {
     dispatch(calculateTotals())
   }, [cartItems, dispatch])
 
-  // ✅ Handle clearing cart with user persistence
   const handleClearCart = () => {
-    if (currentUser) {
-      dispatch(clearUserCart(currentUser.id))
-    } else {
-      dispatch(clearCart())
-    }
+    dispatch(clearCart())
   }
 
-  // ✅ If cart is empty, show message
   if (cartItems.length === 0) {
     return (
       <div className='px-5 md:container mx-auto mt-[50px] text-white text-center'>
@@ -58,14 +44,12 @@ const Cart = () => {
 
       {/* Buttons */}
       <div className='text-primary mt-5 mb-5 flex flex-col md:flex-row gap-5 justify-center'>
-        {/* Clear cart button */}
         <button
           onClick={handleClearCart}
           className='bg-white text-primary p-5 rounded-lg border border-primary hover:bg-primary hover:text-white transition-all cursor-pointer'
         >
           Clear Cart
         </button>
-        {/* Checkout button */}
         <button className='bg-primary text-white p-5 rounded-lg border border-primary hover:bg-white hover:text-primary transition-all cursor-pointer'>
           Check Out
         </button>

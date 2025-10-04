@@ -1,26 +1,17 @@
-import React from 'react'
-import { Navigate } from 'react-router-dom'
-import { useAuth } from '@clerk/clerk-react'
+import React from "react";
+import { useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
 
 const ProtectedRoute = ({ children }) => {
-  const { isSignedIn, isLoaded } = useAuth()
+  const { token } = useSelector((state) => state.auth);
 
-  // Show loading while checking authentication status
-  if (!isLoaded) {
-    return (
-      <div className='min-h-screen flex items-center justify-center'>
-        <div className='animate-spin rounded-full h-32 w-32 border-b-2 border-primary'></div>
-      </div>
-    )
+  // if no token, redirect to signin
+  if (!token) {
+    return <Navigate to="/signin" replace />;
   }
 
-  // Redirect to home if not signed in
-  if (!isSignedIn) {
-    return <Navigate to='/' replace />
-  }
+  // otherwise, show the protected content
+  return children;
+};
 
-  // Render the protected component if signed in
-  return children
-}
-
-export default ProtectedRoute
+export default ProtectedRoute;
