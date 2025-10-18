@@ -9,18 +9,29 @@ const Signin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { token, isLoading, error } = useSelector((state) => state.auth);
-
-  useEffect(() => {
-    if (token) {
-      navigate("/"); // ✅ now it will trigger as soon as token updates
-    }
-  }, [token, navigate]);
+  const { token, isLoading, error, justLoggedIn } = useSelector((state) => state.auth);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("Dispatching login with:", { email, password });
     dispatch(login({ email, password }));
   };
+
+  // Redirect if already logged in (when user manually navigates to /signin)
+  useEffect(() => {
+    if (token && !justLoggedIn) {
+      console.log("Already logged in, redirecting to /");
+      navigate("/", { replace: true });
+    }
+  }, [token, justLoggedIn, navigate]);
+
+  // Redirect after successful login
+  useEffect(() => {
+    if (justLoggedIn && token) {
+      console.log("Just logged in successfully, navigating to /");
+      navigate("/", { replace: true });
+    }
+  }, [justLoggedIn, token, navigate]);
 
   return (
     <div className="max-h-screen flex">
@@ -41,19 +52,21 @@ const Signin = () => {
               placeholder="Enter Your E-mail"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              required
             />
 
             <label htmlFor="password">Password</label>
             <input
               id="password"
               type="password"
-              className="input text-black p-2 rounded"
+              className="input p-2 rounded"
               placeholder="Enter Your Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required
             />
 
-            {error && <p className="text-red-400 text-sm text-center mt-2">{error}</p>}
+            {error && <p className="text-white text-sm text-center mt-2">{error}</p>}
 
             <div className="flex gap-2 justify-center items-center mt-3">
               <button

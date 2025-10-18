@@ -1,16 +1,16 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const ProtectedRoute = ({ children }) => {
   const { token } = useSelector((state) => state.auth);
+  const isLoggedIn = !!token;
+  console.log("ProtectedRoute - isLoggedIn:", isLoggedIn, "Token:", token);
 
-  // if no token, redirect to signin
-  if (!token) {
+  if (!isLoggedIn) {
     return <Navigate to="/signin" replace />;
   }
 
-  // otherwise, show the protected content
   return children;
 };
 

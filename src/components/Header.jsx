@@ -85,7 +85,7 @@ const Header = () => {
                 <span className='text-lg'>{user?.name || 'User'}</span>
                 <button
                   onClick={handleLogout}
-                  className='border px-3 py-1 rounded-md hover:bg-primary hover:text-white transition-all'
+                  className='border px-3 py-1 cursor-pointer rounded-md hover:bg-primary hover:text-white transition-all'
                 >
                   Logout
                 </button>
