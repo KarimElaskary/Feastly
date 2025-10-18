@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "../features/authSlice";
+import whitelogo from '../assets/whitelogo.png';
 
 const Signup = () => {
   const dispatch = useDispatch();
@@ -29,15 +30,15 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-const result = await dispatch(
-  register({
-    name: formData.name,
-    email: formData.email,
-    address: formData.address,
-    phone: formData.phoneNumber,
-    password: formData.password,
-  })
-);
+    const result = await dispatch(
+      register({
+        name: formData.name,
+        email: formData.email,
+        address: formData.address,
+        phone: formData.phoneNumber,
+        password: formData.password,
+      })
+    );
 
     if (result.meta.requestStatus === "fulfilled") {
       navigate("/"); // redirect to homepage on success
@@ -45,82 +46,115 @@ const result = await dispatch(
   };
 
   return (
-    <div className="max-h-screen flex">
-      <div className="w-1/2 flex justify-center items-center h-screen">
+    <div className="min-h-screen flex flex-col md:flex-row">
+      {/* Logo Section - Hidden on mobile, shown on medium+ screens */}
+      <div className="hidden md:flex md:w-1/2 justify-center items-center h-screen">
         <img src="feastly.png" alt="logo" className="w-[50%]" />
       </div>
-      <div className="w-1/2 flex flex-col justify-center items-center h-screen bg-primary text-white">
-        <form
-          onSubmit={handleSubmit}
-          className="w-full p-10 flex flex-col gap-3"
-        >
-          <h1 className="text-3xl text-center">Signup to Feastly</h1>
 
-          <label>Name</label>
-          <input
-            type="text"
-            name="name"
-            className="input"
-            placeholder="Enter Your Fullname"
-            value={formData.name}
-            onChange={handleChange}
-          />
-
-          <label>E-mail</label>
-          <input
-            type="text"
-            name="email"
-            className="input"
-            placeholder="Enter Your E-mail"
-            value={formData.email}
-            onChange={handleChange}
-          />
-
-          <label>Address</label>
-          <input
-            type="text"
-            name="address"
-            className="input"
-            placeholder="Enter Your address"
-            value={formData.address}
-            onChange={handleChange}
-          />
-
-          <label>Phone Number</label>
-          <input
-            type="text"
-            name="phoneNumber"
-            className="input"
-            placeholder="Enter Your Phone Number"
-            value={formData.phoneNumber}
-            onChange={handleChange}
-          />
-
-          <label>Password</label>
-          <input
-            type="password"
-            name="password"
-            className="input"
-            placeholder="Enter Your Password"
-            value={formData.password}
-            onChange={handleChange}
-          />
-
-          {error && <p className="text-red-500 text-sm">{error}</p>}
-
-          <div className="flex gap-2 justify-center items-center">
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="border rounded-md bg-white text-primary cursor-pointer p-2 transition-all flex items-center justify-center gap-2 text-xl"
-            >
-              {isLoading ? "Signing up..." : "Signup"}
-            </button>
-            <Link to="/signin" className="underline">
-              Already have account? Sign in
-            </Link>
+      {/* Form Section */}
+      <div className="w-full md:w-1/2 flex flex-col justify-center items-center min-h-screen bg-primary text-white py-8">
+        <div className="w-full p-6 md:p-10 flex flex-col gap-3 max-w-md overflow-y-auto">
+          {/* Mobile Logo - Only shown on mobile */}
+          <div className="flex justify-center mb-4 md:hidden">
+            <img src={whitelogo} alt="logo" className="w-32" />
           </div>
-        </form>
+
+          <h1 className="text-2xl md:text-3xl text-center font-semibold mb-2">
+            Signup to Feastly
+          </h1>
+
+          <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+            <label htmlFor="name" className="text-sm md:text-base">
+              Name
+            </label>
+            <input
+              id="name"
+              type="text"
+              name="name"
+              className="input text-black p-3 rounded focus:outline-none focus:ring-2 focus:ring-white"
+              placeholder="Enter Your Fullname"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
+
+            <label htmlFor="email" className="text-sm md:text-base">
+              E-mail
+            </label>
+            <input
+              id="email"
+              type="email"
+              name="email"
+              className="input text-black p-3 rounded focus:outline-none focus:ring-2 focus:ring-white"
+              placeholder="Enter Your E-mail"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+
+            <label htmlFor="address" className="text-sm md:text-base">
+              Address
+            </label>
+            <input
+              id="address"
+              type="text"
+              name="address"
+              className="input text-black p-3 rounded focus:outline-none focus:ring-2 focus:ring-white"
+              placeholder="Enter Your Address"
+              value={formData.address}
+              onChange={handleChange}
+              required
+            />
+
+            <label htmlFor="phoneNumber" className="text-sm md:text-base">
+              Phone Number
+            </label>
+            <input
+              id="phoneNumber"
+              type="tel"
+              name="phoneNumber"
+              className="input text-black p-3 rounded focus:outline-none focus:ring-2 focus:ring-white"
+              placeholder="Enter Your Phone Number"
+              value={formData.phoneNumber}
+              onChange={handleChange}
+              required
+            />
+
+            <label htmlFor="password" className="text-sm md:text-base">
+              Password
+            </label>
+            <input
+              id="password"
+              type="password"
+              name="password"
+              className="input text-black p-3 rounded focus:outline-none focus:ring-2 focus:ring-white"
+              placeholder="Enter Your Password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+
+            {error && (
+              <p className="text-white text-sm text-center bg-red-500 bg-opacity-20 p-2 rounded">
+                {error}
+              </p>
+            )}
+
+            <div className="flex flex-col md:flex-row gap-3 md:gap-2 justify-center items-center mt-3">
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="w-full md:w-auto border rounded-md bg-white text-primary cursor-pointer px-6 py-2 transition-all flex items-center justify-center gap-2 text-lg md:text-xl disabled:opacity-60 hover:bg-opacity-90"
+              >
+                {isLoading ? "Signing up..." : "Signup"}
+              </button>
+              <Link to="/signin" className="underline text-sm hover:text-gray-200">
+                Already have account? Sign in
+              </Link>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
