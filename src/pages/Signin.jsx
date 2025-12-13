@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../features/authSlice";
-import whitelogo from '../assets/whitelogo.png';
+import whitelogo from "../assets/whitelogo.png";
 
 const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from || "/";
 
-  const { token, isLoading, error, justLoggedIn } = useSelector((state) => state.auth);
+  const { token, isLoading, error, justLoggedIn } = useSelector(
+    (state) => state.auth
+  );
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -21,16 +25,16 @@ const Signin = () => {
   // Redirect if already logged in (when user manually navigates to /signin)
   useEffect(() => {
     if (token && !justLoggedIn) {
-      console.log("Already logged in, redirecting to /");
-      navigate("/", { replace: true });
+      console.log("Already logged in, redirecting to", from);
+      navigate(from, { replace: true });
     }
   }, [token, justLoggedIn, navigate]);
 
   // Redirect after successful login
   useEffect(() => {
     if (justLoggedIn && token) {
-      console.log("Just logged in successfully, navigating to /");
-      navigate("/", { replace: true });
+      console.log("Just logged in successfully, navigating to", from);
+      navigate(from, { replace: true });
     }
   }, [justLoggedIn, token, navigate]);
 
@@ -49,10 +53,14 @@ const Signin = () => {
             <img src={whitelogo} alt="logo" className="w-32" />
           </div>
 
-          <h1 className="text-2xl md:text-3xl text-center font-semibold">Signin to Feastly</h1>
+          <h1 className="text-2xl md:text-3xl text-center font-semibold">
+            Signin to Feastly
+          </h1>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-3 mt-4">
-            <label htmlFor="email" className="text-sm md:text-base">E-mail</label>
+            <label htmlFor="email" className="text-sm md:text-base">
+              E-mail
+            </label>
             <input
               id="email"
               type="email"
@@ -63,7 +71,9 @@ const Signin = () => {
               required
             />
 
-            <label htmlFor="password" className="text-sm md:text-base">Password</label>
+            <label htmlFor="password" className="text-sm md:text-base">
+              Password
+            </label>
             <input
               id="password"
               type="password"
@@ -88,7 +98,10 @@ const Signin = () => {
               >
                 {isLoading ? "Signing in..." : "Signin"}
               </button>
-              <Link to="/signup" className="underline text-sm hover:text-gray-200">
+              <Link
+                to="/signup"
+                className="underline text-sm hover:text-gray-200"
+              >
                 Or create an account here!
               </Link>
             </div>
