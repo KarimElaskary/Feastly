@@ -111,7 +111,7 @@ const ProductDetails = () => {
 
           <button
             onClick={handleAddToCart}
-            className="w-full sm:w-auto bg-gradient-to-r from-primary to-primary-dark text-white text-lg font-bold py-4 px-10 rounded-2xl shadow-lg shadow-primary/30 hover:shadow-primary/50 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center gap-3"
+            className="w-full sm:w-auto cursor-pointer bg-gradient-to-r from-primary to-primary-dark text-white text-lg font-bold py-4 px-10 rounded-2xl shadow-lg shadow-primary/30 hover:shadow-primary/50 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center gap-3"
           >
             <FaCartPlus className="text-2xl" />
             Add to Order
