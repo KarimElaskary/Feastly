@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "../features/authSlice";
-import whitelogo from '../assets/whitelogo.png';
+import pizza from "../assets/pizza.jpg"; // Using an existing asset
 
 const Signup = () => {
   const dispatch = useDispatch();
@@ -18,7 +18,6 @@ const Signup = () => {
     password: "",
   });
 
-  // handle input changes
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -26,10 +25,8 @@ const Signup = () => {
     });
   };
 
-  // handle form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const result = await dispatch(
       register({
         name: formData.name,
@@ -41,117 +38,133 @@ const Signup = () => {
     );
 
     if (result.meta.requestStatus === "fulfilled") {
-      navigate("/"); // redirect to homepage on success
+      navigate("/");
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row">
-      {/* Logo Section - Hidden on mobile, shown on medium+ screens */}
-      <div className="hidden md:flex md:w-1/2 justify-center items-center h-screen">
-        <img src="feastly.png" alt="logo" className="w-[50%]" />
+    <div className="min-h-screen flex font-sans">
+      {/* Visual Section */}
+      <div className="hidden md:flex md:w-1/2 relative overflow-hidden">
+        <img
+          src={pizza}
+          alt="Signup Background"
+          className="absolute inset-0 w-full h-full object-cover animate-[scale_20s_ease-in-out_infinite]"
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary-dark/80 to-primary/40 backdrop-blur-[2px] flex flex-col justify-center items-center text-white p-12 text-center">
+          <h2 className="text-5xl font-bold mb-6 drop-shadow-lg">
+            Join the Feast
+          </h2>
+          <p className="text-xl font-light max-w-md leading-relaxed">
+            Create an account to unlock exclusive deals, track your orders, and
+            satisfy your cravings in style.
+          </p>
+        </div>
       </div>
 
       {/* Form Section */}
-      <div className="w-full md:w-1/2 flex flex-col justify-center items-center min-h-screen bg-primary text-white py-8">
-        <div className="w-full p-6 md:p-10 flex flex-col gap-3 max-w-md overflow-y-auto">
-          {/* Mobile Logo - Only shown on mobile */}
-          <div className="flex justify-center mb-4 md:hidden">
-            <img src={whitelogo} alt="logo" className="w-32" />
+      <div className="w-full md:w-1/2 flex flex-col justify-center items-center min-h-screen bg-slate-50 p-6 relative overflow-hidden">
+        {/* Decoration */}
+        <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+
+        <div className="w-full max-w-md z-10">
+          <div className="text-center mb-10">
+            <h1 className="text-4xl font-bold text-slate-800 mb-2">
+              Create Account
+            </h1>
+            <p className="text-slate-500">Sign up to get started</p>
           </div>
 
-          <h1 className="text-2xl md:text-3xl text-center font-semibold mb-2">
-            Signup to Feastly
-          </h1>
+          <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+            <div className="group">
+              <input
+                id="name"
+                type="text"
+                name="name"
+                className="input"
+                placeholder="Full Name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-          <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-            <label htmlFor="name" className="text-sm md:text-base">
-              Name
-            </label>
-            <input
-              id="name"
-              type="text"
-              name="name"
-              className="input text-black p-3 rounded focus:outline-none focus:ring-2 focus:ring-white"
-              placeholder="Enter Your Fullname"
-              value={formData.name}
-              onChange={handleChange}
-              required
-            />
+            <div className="group">
+              <input
+                id="email"
+                type="email"
+                name="email"
+                className="input"
+                placeholder="Email Address"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-            <label htmlFor="email" className="text-sm md:text-base">
-              E-mail
-            </label>
-            <input
-              id="email"
-              type="email"
-              name="email"
-              className="input text-black p-3 rounded focus:outline-none focus:ring-2 focus:ring-white"
-              placeholder="Enter Your E-mail"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
+            <div className="group">
+              <input
+                id="address"
+                type="text"
+                name="address"
+                className="input"
+                placeholder="Delivery Address"
+                value={formData.address}
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-            <label htmlFor="address" className="text-sm md:text-base">
-              Address
-            </label>
-            <input
-              id="address"
-              type="text"
-              name="address"
-              className="input text-black p-3 rounded focus:outline-none focus:ring-2 focus:ring-white"
-              placeholder="Enter Your Address"
-              value={formData.address}
-              onChange={handleChange}
-              required
-            />
+            <div className="group">
+              <input
+                id="phoneNumber"
+                type="tel"
+                name="phoneNumber"
+                className="input"
+                placeholder="Phone Number"
+                value={formData.phoneNumber}
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-            <label htmlFor="phoneNumber" className="text-sm md:text-base">
-              Phone Number
-            </label>
-            <input
-              id="phoneNumber"
-              type="tel"
-              name="phoneNumber"
-              className="input text-black p-3 rounded focus:outline-none focus:ring-2 focus:ring-white"
-              placeholder="Enter Your Phone Number"
-              value={formData.phoneNumber}
-              onChange={handleChange}
-              required
-            />
-
-            <label htmlFor="password" className="text-sm md:text-base">
-              Password
-            </label>
-            <input
-              id="password"
-              type="password"
-              name="password"
-              className="input text-black p-3 rounded focus:outline-none focus:ring-2 focus:ring-white"
-              placeholder="Enter Your Password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
+            <div className="group">
+              <input
+                id="password"
+                type="password"
+                name="password"
+                className="input"
+                placeholder="Password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+            </div>
 
             {error && (
-              <p className="text-white text-sm text-center bg-red-500 bg-opacity-20 p-2 rounded">
+              <div className="bg-red-50 border border-red-200 text-red-600 text-sm p-3 rounded-lg text-center animate-pulse">
                 {error}
-              </p>
+              </div>
             )}
 
-            <div className="flex flex-col md:flex-row gap-3 md:gap-2 justify-center items-center mt-3">
-              <button
-                type="submit"
-                disabled={isLoading}
-                className="w-full md:w-auto border rounded-md bg-white text-primary cursor-pointer px-6 py-2 transition-all flex items-center justify-center gap-2 text-lg md:text-xl disabled:opacity-60 hover:bg-opacity-90"
-              >
-                {isLoading ? "Signing up..." : "Signup"}
-              </button>
-              <Link to="/signin" className="underline text-sm hover:text-gray-200">
-                Already have account? Sign in
-              </Link>
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full bg-gradient-to-r from-primary to-primary-dark text-white font-bold py-4 rounded-xl shadow-lg shadow-primary/30 hover:shadow-primary/50 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed mt-4"
+            >
+              {isLoading ? "Creating Account..." : "Sign Up"}
+            </button>
+
+            <div className="text-center mt-6">
+              <p className="text-slate-500">
+                Already have an account?{" "}
+                <Link
+                  to="/signin"
+                  className="text-primary font-semibold hover:underline underline-offset-4"
+                >
+                  Sign in
+                </Link>
+              </p>
             </div>
           </form>
         </div>

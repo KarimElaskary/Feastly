@@ -33,63 +33,90 @@ const ProductDetails = () => {
     fetchProduct();
   }, [id]);
 
-  if (loading) {
+  if (loading) return <Loader />;
+
+  if (!product) {
     return (
-      <div>
-        <Loader />
+      <div className="min-h-[50vh] flex flex-col items-center justify-center gap-4">
+        <h2 className="text-3xl font-bold text-slate-800">Product Not Found</h2>
+        <Link
+          to="/products"
+          className="text-primary hover:underline underline-offset-4 font-semibold"
+        >
+          Return to Menu
+        </Link>
       </div>
     );
   }
 
-  if (!product) {
-    return (
-      <div className="text-center mt-10 text-primary">Product not found.</div>
-    );
-  }
+  const handleAddToCart = () => {
+    if (token) {
+      dispatch(addToCart(product));
+    } else {
+      navigate("/signin", { state: { from: location.pathname } });
+    }
+  };
 
   return (
-    <div className="max-w-4xl mx-auto mt-10 p-6 text-primary">
+    <div className="container mx-auto px-6 py-12 lg:py-20 animate-[fadeIn_0.5s_ease-out]">
       <Link
-        to={"/products"}
-        className="flex items-center font-semibold mb-5 hover:underline hover:underline-offset-2"
+        to="/products"
+        className="inline-flex items-center text-slate-500 hover:text-primary transition-colors mb-8 group"
       >
-        <IoIosArrowBack /> Back to products
+        <IoIosArrowBack className="group-hover:-translate-x-1 transition-transform" />
+        <span className="ml-1 font-medium">Back to Menu</span>
       </Link>
-      <h1 className="text-4xl font-bold text-center mb-5">Product Details</h1>
-      <div className="flex-1 flex flex-col gap-6 items-center">
-        <img
-          src={product.imagesUrl}
-          alt={product.name}
-          className="w-[300px] md:w-[500px] object-cover"
-        />
-        <h1 className="text-3xl font-bold mb-5 text-center">{product.name}</h1>
-        <div className="flex-1 w-full p-2 border rounded-lg">
-          <p>
-            <span className="font-semibold">ID:</span> {product.id}
-          </p>
-          <p>
-            <span className="font-semibold">Description:</span>{" "}
-            {product.description}
-          </p>
-          <p>
-            <span className="font-semibold">Category:</span> {product.brand}
-          </p>
-          <p>
-            <span className="font-semibold">Price:</span> ${product.price}
-          </p>
+
+      <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center lg:items-start">
+        {/* Image Section */}
+        <div className="w-full lg:w-1/2 relative group perspective-1000">
+          <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-accent/20 rounded-[2.5rem] blur-3xl -z-10 opacity-70 group-hover:opacity-100 transition-opacity duration-500" />
+          <img
+            src={product.imagesUrl}
+            alt={product.name}
+            className="w-full h-auto object-cover rounded-[2.5rem] shadow-2xl shadow-primary/20 transform transition-transform duration-500 hover:scale-[1.02] hover:rotate-1"
+          />
         </div>
-        <button
-          onClick={() => {
-            if (token) {
-              dispatch(addToCart(product));
-            } else {
-              navigate("/signin", { state: { from: location.pathname } });
-            }
-          }}
-          className="w-full border rounded-md hover:bg-primary hover:text-white cursor-pointer p-2 transition-all flex items-center justify-center gap-2 text-xl"
-        >
-          <FaCartPlus /> Add to Cart
-        </button>
+
+        {/* Details Section */}
+        <div className="w-full lg:w-1/2 flex flex-col justify-center">
+          <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary font-bold text-sm tracking-widest uppercase mb-4 w-fit">
+            {product.brand}
+          </span>
+
+          <h1 className="text-4xl lg:text-6xl font-extrabold text-slate-900 mb-6 leading-tight">
+            {product.name}
+          </h1>
+
+          <p className="text-slate-600 text-lg leading-relaxed mb-8 border-l-4 border-primary/30 pl-6">
+            {product.description}
+            <br />
+            <span className="block mt-4 text-sm text-slate-400 italic">
+              Freshly prepared with premium ingredients.
+            </span>
+          </p>
+
+          <div className="flex items-center gap-8 mb-10">
+            <div className="flex flex-col">
+              <span className="text-sm text-slate-500 font-medium uppercase tracking-wider">
+                Price
+              </span>
+              <span className="text-4xl font-bold text-primary">
+                ${product.price}
+              </span>
+            </div>
+            <div className="flex flex-col">
+            </div>
+          </div>
+
+          <button
+            onClick={handleAddToCart}
+            className="w-full sm:w-auto bg-gradient-to-r from-primary to-primary-dark text-white text-lg font-bold py-4 px-10 rounded-2xl shadow-lg shadow-primary/30 hover:shadow-primary/50 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center gap-3"
+          >
+            <FaCartPlus className="text-2xl" />
+            Add to Order
+          </button>
+        </div>
       </div>
     </div>
   );

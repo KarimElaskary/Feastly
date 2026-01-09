@@ -57,6 +57,7 @@ const authSlice = createSlice({
       state.token = null;
       state.justLoggedIn = false;
       localStorage.removeItem("token");
+      localStorage.removeItem("user");
     },
     // Reset justLoggedIn flag after navigation
     resetJustLoggedIn: (state) => {
@@ -101,11 +102,13 @@ const authSlice = createSlice({
       .addCase(register.fulfilled, (state, action) => {
         console.log("Register fulfilled, payload:", action.payload);
         state.isLoading = false;
-        state.user = action.payload.user || null;
-        state.token = action.payload.token;
+        // Check both flat and nested 'data' property structures to be safe
+        state.user = action.payload.user || action.payload.data?.user || null;
+        state.token = action.payload.token || action.payload.data?.token;
         state.justLoggedIn = true;
         state.error = null;
-        localStorage.setItem("token", action.payload.token);
+        localStorage.setItem("token", state.token);
+        localStorage.setItem("user", JSON.stringify(state.user));
       })
       .addCase(register.rejected, (state, action) => {
         console.log("Register rejected:", action.payload);

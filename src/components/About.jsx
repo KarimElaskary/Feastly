@@ -1,19 +1,12 @@
-import React from 'react'
-import feast from '../assets/feast.jpg'
+import React from "react";
+import feast from "../assets/feast.jpg";
 
 const About = () => {
   return (
-    <div className='px-5 md:container mx-auto mt-[50px] '>
-      <div className='text-primary flex flex-col gap-6 justify-center items-center pb-9'>
-        {/* <h1 className="text-8xl text-primary font-bold underline underline-offset-10">
-          About
-        </h1> */}
-        <h2 className='text-6xl text-primary font-semibold text-center'>
-          Welcome to Feastly
-        </h2>
-        <p className='text-2xl md:text-4xl text-center'>where cravings meet convenience.</p>
-        <div className='flex flex-col lg:flex-row items-center gap-10 justify-between mt-[50px]'>
-          <p className='text-2xl text-center lg:text-left'>
+    <div className="px-5 md:container mx-auto mt-[50px] ">
+      <div className="text-primary flex flex-col gap-6 justify-center items-center pb-9">
+        <div className="flex flex-col lg:flex-row items-center gap-10 justify-between mt-[50px]">
+          <p className="text-2xl text-center lg:text-left">
             At Feastly, we're passionate about great food and simple
             experiences. Whether you're in the mood for sizzling street-style
             bites, hearty classics, we bring a world of flavors to your
@@ -25,11 +18,11 @@ const About = () => {
             you're a late-night snacker or a lunch-time foodie, Feastly is here
             to feed your moment. Let’s eat better. Together.
           </p>
-          <img src={feast} alt='' className='w-[800px] h-[400px] rounded-2xl' />
+          <img src={feast} alt="" className="w-[800px] h-[400px] rounded-2xl" />
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default About
+export default About;
